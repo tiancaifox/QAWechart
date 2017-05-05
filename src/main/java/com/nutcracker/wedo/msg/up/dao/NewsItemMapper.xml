@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.nutcracker.wedo.msg.up.dao.NewsItemDao">
+
+    <resultMap id="BaseResultMap" type="com.nutcracker.wedo.msg.up.bo.NewsItem">
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <id column="message_id" property="messageId" jdbcType="BIGINT" />
+        <result column="is_first_item" property="isFirstItem" jdbcType="VARCHAR" />
+        <result column="msg_type" property="detail" jdbcType="VARCHAR" />
+        <result column="title" property="title" jdbcType="VARCHAR" />
+        <result column="description" property="description" jdbcType="VARCHAR" />
+        <result column="pic_id" property="picId" jdbcType="INTEGER" />
+        <result column="url" property="url" jdbcType="VARCHAR" />
+        <result column="detail" property="detail" jdbcType="VARCHAR" />
+        <result column="author" property="author" jdbcType="VARCHAR" />
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,
+        message_id,
+        is_first_item,
+        title,
+        description,
+        pic_id,
+        url,
+        detail,
+        author,
+        create_time
+    </sql>
+
+    <sql id="Tbl_Name">tb_news_message_item</sql>
+
+    <insert id="insert" parameterType="com.nutcracker.wedo.msg.up.bo.NewsItem" useGeneratedKeys="true" keyProperty="item.id">
+        insert into
+        <include refid="Tbl_Name" />
+        (message_id,
+        is_first_item,
+        title,
+        description,
+        pic_id,
+        url,
+        detail,
+        author,
+        create_time)
+        VALUES
+        (#{item.messageId,jdbcType=BIGINT},#{item.isFirstItem,jdbcType=VARCHAR},
+        #{item.title,jdbcType=VARCHAR},#{item.description,jdbcType=VARCHAR},
+        #{item.picId,jdbcType=INTEGER},#{item.url,jdbcType=VARCHAR},
+        #{item.detail,jdbcType=VARCHAR},#{item.author,jdbcType=VARCHAR},
+        #{item.createTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="bathInsert" >
+        insert into
+        <include refid="Tbl_Name" />
+        (message_id,
+        is_first_item,
+        title,
+        description,
+        pic_id,
+        url,
+        detail,
+        author,
+        create_time)
+        VALUES
+        <foreach collection="items" index="idx" close="" open=""
+                 item="item" separator=",">
+            (#{item.messageId,jdbcType=BIGINT},#{item.isFirstItem,jdbcType=VARCHAR},
+            #{item.title,jdbcType=VARCHAR},#{item.description,jdbcType=VARCHAR},
+            #{item.picId,jdbcType=INTEGER},#{item.url,jdbcType=VARCHAR},
+            #{item.detail,jdbcType=VARCHAR},#{item.author,jdbcType=VARCHAR},
+            #{item.createTime,jdbcType=TIMESTAMP})
+        </foreach>
+    </insert>
+
+    <delete id="deleteById">
+        delete from <include refid="Tbl_Name" /> where id = #{id,jdbcType=BIGINT}
+    </delete>
+
+    <delete id="deleteByMessageId">
+        delete from <include refid="Tbl_Name" /> where message_id = #{messageId,jdbcType=BIGINT}
+    </delete>
+
+    <update id="update" parameterType="com.nutcracker.wedo.msg.up.bo.NewsItem">
+        update <include refid="Tbl_Name" />
+        <set>
+            <if test="item.messageId != null">
+                message_id = #{item.messageId,jdbcType=BIGINT},
+            </if>
+            <if test="item.isFirstItem != null">
+                is_first_item = #{item.isFirstItem,jdbcType=VARCHAR},
+            </if>
+            <if test="item.title != null">
+                title = #{item.title,jdbcType=VARCHAR},
+            </if>
+            <if test="item.description != null">
+                description = #{item.description,jdbcType=VARCHAR},
+            </if>
+            <if test="item.picId != null">
+                pic_id = #{item.picId,jdbcType=INTEGER},
+            </if>
+            <if test="item.url != null">
+                url = #{item.url,jdbcType=VARCHAR},
+            </if>
+            <if test="item.detail != null">
+                detail = #{item.detail,jdbcType=VARCHAR},
+            </if>
+            <if test="item.author!= null">
+                author = #{item.author,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{item.id,jdbcType=BIGINT};
+    </update>
+
+    <select id="listByMessageId" resultMap="BaseResultMap" >
+        select <include refid="Base_Column_List" />
+        from <include refid="Tbl_Name" />
+        where message_id = #{messageId,jdbcType=BIGINT};
+    </select>
+
+    <select id="getById" resultMap="BaseResultMap" >
+        select <include refid="Base_Column_List" />
+        from <include refid="Tbl_Name" />
+        where id = #{itemId,jdbcType=BIGINT};
+    </select>
+
+</mapper>

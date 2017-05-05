@@ -1,0 +1,10 @@
+<html>
+<body>
+<h1>${city}</h1>
+<br>
+    $date.getDate()
+</br>
+$version
+
+</body>
+</html>

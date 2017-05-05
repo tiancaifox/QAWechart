@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+    <!--创建一个sql会话工厂bean，指定数据源 -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 指定数据源 -->
+        <property name="dataSource" ref="dataSource" />
+        <!-- 类型别名包，默认引入com.nutcracker.wedo下的所有类 -->
+        <property name="typeAliasesPackage" value="com.nutcracker.wedo"></property>
+        <!--mybatis配置文件mapper文件目录-->
+        <!--<property name="configLocation" value="classpath:/conf/MyBatisCfg.xml" />-->
+        <!--指定sql映射xml文件的路径 -->
+        <property name="mapperLocations"
+                  value="classpath*:com/nutcracker/wedo/**/*Mapper.xml"></property>
+    </bean>
+
+    <!--mapper bean -->
+    <!--<bean id="newsItemDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        &lt;!&ndash;指定映射文件 &ndash;&gt;
+        <property name="mapperInterface" value="com.nutcracker.wedo.msg.up.dao.NewsItemDao"></property>
+        &lt;!&ndash; 指定sql会话工厂 &ndash;&gt;
+        <property name="sqlSessionFactory" ref="sqlSessionFactory"></property>
+    </bean>-->
+
+    <!-- scan for mappers and let them be autowired -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
+        <property name="basePackage" value="com.nutcracker.wedo.**.dao" />
+        <property name="annotationClass" value=" com.nutcracker.wedo.common.annotation.SqlMapper"></property>
+        <property name="markerInterface" value="org.mybatis.spring.mapper.MapperFactoryBean"></property>
+    </bean>
+
+</beans>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd">
+
+    <bean id='ds' class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc.driverClassName}" />
+        <property name="jdbcUrl" value="${jdbc.url}" />
+        <property name="user" value="${jdbc.username}" />
+        <property name="password" value="${jdbc.password}" />
+        <property name="initialPoolSize" value="${jdbc.initialPoolSize}" />
+        <property name="minPoolSize" value="${jdbc.minPoolSize}" />
+        <property name="maxPoolSize" value="${jdbc.maxPoolSize}" />
+    </bean>
+
+    <bean id='ds1' class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc1.driverClassName}" />
+        <property name="jdbcUrl" value="${jdbc1.url}" />
+        <property name="user" value="${jdbc1.username}" />
+        <property name="password" value="${jdbc1.password}" />
+        <property name="initialPoolSize" value="${jdbc1.initialPoolSize}" />
+        <property name="minPoolSize" value="${jdbc1.minPoolSize}" />
+        <property name="maxPoolSize" value="${jdbc1.maxPoolSize}" />
+    </bean>
+
+
+    <!-- 动态数据源 -->
+    <bean id="dataSource" class="com.nutcracker.wedo.common.db.DynamicDataSource">
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <entry key="ds1" value-ref="ds" />
+                <entry key="ds2" value-ref="ds1" />
+            </map>
+        </property>
+        <property name="defaultTargetDataSource" ref="ds" />
+    </bean>
+
+    <!-- 事务管理拦截器 -->
+    <bean id="transactionInterceptor"
+          class="org.springframework.transaction.interceptor.TransactionInterceptor">
+        <property name="transactionManager" ref="transactionManager" />
+        <property name="transactionAttributes">
+            <props>
+                <prop key="query*">PROPAGATION_SUPPORTS,readOnly</prop>
+                <prop key="is*">PROPAGATION_SUPPORTS,readOnly</prop>
+                <prop key="select*">PROPAGATION_SUPPORTS,readOnly</prop>
+                <prop key="find*">PROPAGATION_SUPPORTS,readOnly</prop>
+                <prop key="get*">PROPAGATION_SUPPORTS,readOnly</prop>
+                <prop key="load*">PROPAGATION_SUPPORTS,readOnly</prop>
+                <prop key="count*">PROPAGATION_SUPPORTS,readOnly</prop>
+                <prop key="list*">PROPAGATION_SUPPORTS,readOnly</prop>
+                <prop key="check*">PROPAGATION_SUPPORTS,readOnly</prop>
+                <prop key="save*">PROPAGATION_REQUIRED,-Exception</prop>
+                <prop key="insert*">PROPAGATION_REQUIRED,-Exception</prop>
+                <prop key="del*">PROPAGATION_REQUIRED,-Exception</prop>
+                <prop key="add*">PROPAGATION_REQUIRED,-Exception</prop>
+                <prop key="edit*">PROPAGATION_REQUIRED,-Exception</prop>
+                <prop key="update*">PROPAGATION_REQUIRED,-Exception</prop>
+                <prop key="mod*">PROPAGATION_REQUIRED,-Exception</prop>
+                <prop key="do*">PROPAGATION_REQUIRED,-Exception</prop>
+                <prop key="*">PROPAGATION_SUPPORTS,readOnly</prop>
+            </props>
+        </property>
+    </bean>
+
+    <!-- transaction aop intercepter see applicationContext-interceptors.xml  -->
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+
+</beans>

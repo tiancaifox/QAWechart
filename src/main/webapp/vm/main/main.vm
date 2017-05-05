@@ -1,0 +1,159 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+#parse("/tcom/utils.macro.vm")
+<html style="background: #f7f7f7;">
+<head>
+	<meta charset="utf-8" />
+	<title>wodo管理平台</title>
+	<meta name="keywords" content="wedo" />
+	<meta name="description" content="wedo" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    #includeStatic()
+</head>
+<body style=" overflow-x : hidden; overflow-y : hidden;">
+		<div class="main-container full-height" id="main-container">
+			<script type="text/javascript">
+				try{ace.settings.check('main-container' , 'fixed')}catch(e){}
+			</script>
+			<div class="navbar navbar-default" id="navbar">
+				<div class="navbar-container" id="navbar-container">
+					
+					<div class="navbar-header pull-left">
+						<a href="#" class="navbar-brand">
+							<small>
+								<i class="icon-leaf"></i>
+								wedo
+							</small>
+						</a><!-- /.brand -->
+					</div><!-- /.navbar-header -->
+	
+					<div class="navbar-header pull-right" role="navigation">
+						<ul class="nav ace-nav">
+							<li class="light-blue">
+								<a data-toggle="dropdown" href="#" class="dropdown-toggle">
+									<img class="nav-user-photo" src="$!{webRoot}/assets/avatars/user.jpg" alt="Jason's Photo" />
+									<span class="user-info">
+										<small>欢迎光临,</small>
+										$!{accountName}
+									</span>
+									<i class="icon-caret-down"></i>
+								</a>
+	
+								<ul class="user-menu pull-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
+									<li class="divider"></li>
+									<li>
+										<a href="#">
+											<i class="icon-off"></i>
+											退出
+										</a>
+									</li>
+								</ul>
+							</li>
+						</ul><!-- /.ace-nav -->
+					</div><!-- /.navbar-header -->
+					
+				</div><!-- /.navbar-container -->
+			</div><!-- /.navbar navbar-default -->
+			
+
+			<div class="main-container-inner full-height">
+				<a class="menu-toggler" id="menu-toggler" href="#">
+					<span class="menu-text"></span>
+				</a>
+
+				<div class="sidebar full-height" id="sidebar">
+					<script type="text/javascript">
+						try{ace.settings.check('sidebar' , 'fixed')}catch(e){}
+					</script>
+
+					<ul class="nav nav-list">
+						<li class="active">
+							<a href="$!{webRoot}/main/index">
+								<i class="icon-dashboard"></i>
+								<span class="menu-text">wedo管理平台</span>
+							</a>
+						</li>
+
+						<li>
+							<a  href="$!{webRoot}/rest/weixin/menu/manage"  target="mainFrame">
+								<i class="icon-cogs"></i>
+								<span class="menu-text">自定义菜单设置</span>
+							</a>
+						</li>
+
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-edit "></i>
+								<span class="menu-text"> 推广方案管理</span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+
+							<ul class="submenu">
+								<li>
+									<a href="$!{webRoot}/rest/scheme/news/list" target="mainFrame">
+										<i class="icon-double-angle-right"></i>
+										图文消息
+									</a>
+								</li>
+								<li>
+									<a href="$!{webRoot}/rest/scheme/registry/list" target="mainFrame">
+										<i class="icon-double-angle-right"></i>
+										用户注册
+									</a>
+								</li>
+
+								<li>
+									<a href="$!{webRoot}/rest/scheme/activity/list" target="mainFrame">
+										<i class="icon-double-angle-right"></i>
+										活动发布
+									</a>
+								</li>
+							</ul>
+						</li>
+
+						<li>
+							<a href="#" class="dropdown-toggle">
+								<i class="icon-file-alt"></i>
+
+								<span class="menu-text">
+									基础功能设置
+									<span class="badge badge-primary "></span>
+								</span>
+
+								<b class="arrow icon-angle-down"></b>
+							</a>
+
+							<ul class="submenu">
+								<li>
+									<a href="$!{webRoot}/rest/auto-reply/manager" target="mainFrame">
+										<i class="icon-double-angle-right"></i>
+										自动回复
+									</a>
+								</li>
+
+								
+							</ul>
+						</li>
+					</ul><!-- /.nav-list -->
+
+					<div class="sidebar-collapse" id="sidebar-collapse">
+						<i class="icon-double-angle-left" data-icon1="icon-double-angle-left" data-icon2="icon-double-angle-right"></i>
+					</div>
+
+					<script type="text/javascript">
+						try{ace.settings.check('sidebar' , 'collapsed')}catch(e){}
+					</script>
+				</div>
+
+				<div class="main-content full-height">
+					<iframe frameborder="0" id="mainFrame" name="mainFrame"  height="100%" width="100%" style="background: url('$!{webRoot}/assets/css/images/loading.gif center no-repeat"></iframe>
+				</div><!-- /.main-content -->
+			
+			</div><!-- /.main-container-inner -->
+
+			<a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+				<i class="icon-double-angle-up icon-only bigger-110"></i>
+			</a>
+		</div><!-- /.main-container -->
+</body>
+</html>

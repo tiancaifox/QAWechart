@@ -1,0 +1,68 @@
+#**
+ * 用于定义公共宏
+ *#
+#**
+ * !代表为空的时候打印空字符串
+ *#
+
+#set($webRoot='/wedo')
+#set($urlArgs='v=1.0.0')
+<script type="text/javascript">
+	var _webRoot = "";
+	var _actionWebRoot = "/rest";
+</script>
+#**
+ * 引入静态资源
+ *#
+#macro (includeStatic)
+<!-- basic styles -->
+<link href="$!{webRoot}/assets/css/bootstrap.min.css" rel="stylesheet" />
+<link rel="stylesheet" href="$!{webRoot}/assets/css/font-awesome.min.css" />
+<!-- ace styles -->
+<link rel="stylesheet" href="$!{webRoot}/assets/css/ace.min.css" />
+<link rel="stylesheet" href="$!{webRoot}/assets/css/ace-rtl.min.css" />
+<link rel="stylesheet" href="$!{webRoot}/assets/css/ace-skins.min.css" />
+<!-- ace styles -->
+<link rel="stylesheet" href="$!{webRoot}/assets/css/wedo.css?${urlArgs}" />
+
+<!--[if IE 7]>
+<link rel="stylesheet" href="$!{webRoot}/assets/css/font-awesome-ie7.min.css" />
+<![endif]-->
+<!--[if lte IE 8]>
+<link rel="stylesheet" href="$!{webRoot}/assets/css/ace-ie.min.css" />
+<![endif]-->
+
+<!--导入jquery -->
+<!--[if !IE]> -->
+<script src="$!{webRoot}/assets/js/jquery-2.0.3.min.js"></script>
+<!-- <![endif]-->
+<!--[if IE]>
+<script src="$!{webRoot}/assets/js/jquery-1.10.2.min.js"></script>
+<![endif]-->
+
+<!--加入html5支持 -->
+<!--[if lt IE 9]>
+<script src="$!{webRoot}/assets/js/html5shiv.js"></script>
+<script src="$!{webRoot}/assets/js/respond.min.js"></script>
+<![endif]-->
+
+<!--[if lte IE 8]>
+<script src="$!{webRoot}/assets/js/excanvas.min.js"></script>
+<![endif]-->
+
+<script type="text/javascript">
+    if("ontouchend" in document) document.write("<script src='$!{webRoot}/assets/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+</script>
+
+<script src="$!{webRoot}/assets/js/bootstrap.min.js"></script>
+<script src="$!{webRoot}/assets/js/ace.min.js"></script>
+<script src="$!{webRoot}/assets/js/ace-extra.min.js"></script>
+<script src="$!{webRoot}/assets/js/ace-elements.min.js"></script>
+<script src="$!{webRoot}/assets/js/bootbox.min.js"></script>
+#end
+
+#macro (footer)
+<div class="footer">
+    © 2014 Huhao
+</div>
+#end

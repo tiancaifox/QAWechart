@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+			http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+
+    <!-- 配置文件   加载所有的配置文件 -->
+    <bean id="propertyConfigurer" class="com.nutcracker.wedo.common.util.PropertyHolder">
+        <property name="locations">
+            <list>
+                <value>classpath:/conf/qa/jdbc-mysql.properties</value>
+                <value>classpath:/conf/qa/redis.properties</value>
+                <value>classpath:/conf/qa/sys-conf.properties</value>
+            </list>
+        </property>
+    </bean>
+
+</beans>

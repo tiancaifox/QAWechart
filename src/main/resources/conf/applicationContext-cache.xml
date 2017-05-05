@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+    <bean id="redisClient01" class="com.nutcracker.wedo.common.framework.cache.redis.RedisClient">
+        <property name="redisServer">
+            <value>${redis.server01}</value>
+        </property>
+        <property name="port">
+            <value>${redis.port01}</value>
+        </property>
+        <property name="redisAuthKey">
+            <value>${redis.authKey01}</value>
+        </property>
+    </bean>
+
+    <bean id="redisClient02" class="com.nutcracker.wedo.common.framework.cache.redis.RedisClient">
+        <property name="redisServer">
+            <value>${redis.server02}</value>
+        </property>
+        <property name="port">
+            <value>${redis.port02}</value>
+        </property>
+        <property name="redisAuthKey">
+            <value>${redis.authKey02}</value>
+        </property>
+    </bean>
+
+    <bean id="myCacheManager" class="com.nutcracker.wedo.common.framework.cache.redis.HaRedisCacheManager">
+        <property name="clientList">
+            <list>
+                <ref local="redisClient01" />
+                <ref local="redisClient02" />
+            </list>
+        </property>
+    </bean>
+
+</beans>

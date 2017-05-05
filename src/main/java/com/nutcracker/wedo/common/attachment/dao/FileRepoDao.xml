@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.nutcracker.wedo.common.attachment.dao.FileRepoDao">
+
+    <resultMap id="FileMetaMap"
+               type="com.nutcracker.wedo.common.attachment.bo.Attachment">
+        <result column="id" property="id" jdbcType="BIGINT" />
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        <result column="size" property="size" jdbcType="BIGINT" />
+        <result column="path" property="path" jdbcType="VARCHAR" />
+        <result column="file_type" property="fileType" jdbcType="VARCHAR" />
+        <result column="token" property="token" jdbcType="VARCHAR" />
+        <result column="upload_time" property="uploadTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        id,name,size,path,file_type,token,upload_time
+    </sql>
+    <select id="getFilePath" resultType="string">
+        select path from tb_attachment where id = #{id, jdbcType=BIGINT};
+    </select>
+
+    <insert id="saveAttachment"
+            parameterType="com.nutcracker.wedo.common.attachment.bo.Attachment"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into tb_attachment(name,size,path,file_type,upload_time,token) values
+        (
+        #{name, jdbcType=VARCHAR},
+        #{size, jdbcType=BIGINT},
+        #{path, jdbcType=VARCHAR},
+        #{fileType, jdbcType=VARCHAR},
+        #{uploadTime,jdbcType=TIMESTAMP},
+        #{token,jdbcType=VARCHAR}
+        );
+    </insert>
+
+    <select id="readMetaById" resultMap="FileMetaMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        tb_attachment
+        where
+        id = #{id, jdbcType=BIGINT};
+    </select>
+    <select id="readMetaByToken" resultMap="FileMetaMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        tb_attachment
+        where
+        token = #{token, jdbcType=VARCHAR};
+    </select>
+    <select id="batchReadMeta" resultMap="FileMetaMap">
+        select
+        <include refid="Base_Column_List"/>
+        from
+        tb_attachment
+        where
+        id in
+        <foreach index="idx" item="fid" collection="ids" open="("
+                 separator="," close=")">
+            #{fid, jdbcType=BIGINT}
+        </foreach>
+        ;
+    </select>
+
+</mapper>
